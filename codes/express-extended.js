@@ -28,14 +28,15 @@ app.get("/users/:first_name/:last_name", (req, res) => {
 var usernames = [{ id: 0, name: "user0" }];
 
 app.post("/users/addUser", (req, res) => {
-  if (!req.body.name) res.status(400).send("missing username input");
-  new Error();
+  if (!req.body.name) {
+    throw new Error("missing username input");
+  }
   const username = {
     id: usernames.length + 1,
     name: req.body.name
   };
-  // usernames.push(username);
-  // res.status(201).send(username);
+  usernames.push(username);
+  res.status(201).send(username);
 });
 
 app.use((err, req, res, next) => {
